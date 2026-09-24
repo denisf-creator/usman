@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NVIDIA DLSS 5</title>
+    <meta name="description" content="The next generation of AI-powered graphics. Experience cinematic realism, intelligent rendering, and unprecedented visual fidelity." />
+    <meta property="og:title" content="NVIDIA DLSS 5" />
+    <meta property="og:description" content="The next generation of AI-powered graphics. Experience cinematic realism, intelligent rendering, and unprecedented visual fidelity." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch ? window.fetch.bind(window) : undefined;
+          var currentFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(fn) {
+              currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              var origProto = Window.prototype.fetch ? Window.prototype.fetch.bind(window) : undefined;
+              var curProto = origProto;
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function() { return curProto; },
+                set: function(fn) { curProto = fn; },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          } catch (err) {}
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#76B900]/30 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

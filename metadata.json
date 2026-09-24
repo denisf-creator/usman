@@ -1,0 +1,6 @@
+{
+  "name": "NVIDIA DLSS 5",
+  "description": "The next generation of AI-powered graphics. Experience cinematic realism, intelligent rendering, and unprecedented visual fidelity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
