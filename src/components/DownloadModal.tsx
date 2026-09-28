@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
   const [progress, setProgress] = useState(0);
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const downloadTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +34,15 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
     }
   }, [isOpen]);
 
+  // Clean up interval on unmount
+  useEffect(() => {
+    return () => {
+      if (downloadTimerRef.current) {
+        clearInterval(downloadTimerRef.current);
+      }
+    };
+  }, []);
+
   // Handle escape key
   useEffect(() => {
     if (!isOpen) return;
@@ -48,23 +58,30 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
   if (!isRendered) return null;
 
   const fileName = 'NVIDIA_DLSS_5_Setup_x64.exe';
-  const fileSize = '142 MB';
 
   const handleStartDownload = () => {
+    if (downloadTimerRef.current) {
+      clearInterval(downloadTimerRef.current);
+    }
     setDownloadStatus('downloading');
-    setProgress(25);
+    setProgress(20);
 
-    const interval = setInterval(() => {
+    downloadTimerRef.current = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(interval);
+        const increment = Math.floor(Math.random() * 6) + 24; // 24-29%
+        const next = prev + increment;
+        if (next >= 100) {
+          if (downloadTimerRef.current) {
+            clearInterval(downloadTimerRef.current);
+            downloadTimerRef.current = null;
+          }
           setDownloadStatus('completed');
           triggerActualFileDownload();
           return 100;
         }
-        return prev + 30;
+        return Math.min(next, 95);
       });
-    }, 200);
+    }, 220);
   };
 
   const triggerActualFileDownload = () => {
@@ -97,6 +114,10 @@ Copyright (C) 2026 NVIDIA Corporation. All rights reserved.
   };
 
   const handleClose = () => {
+    if (downloadTimerRef.current) {
+      clearInterval(downloadTimerRef.current);
+      downloadTimerRef.current = null;
+    }
     setIsVisible(false);
     setTimeout(() => {
       onClose();
@@ -160,7 +181,7 @@ Copyright (C) 2026 NVIDIA Corporation. All rights reserved.
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            <span>Download Setup ({fileSize})</span>
+            <span>Download Setup</span>
           </button>
         )}
 
@@ -168,12 +189,12 @@ Copyright (C) 2026 NVIDIA Corporation. All rights reserved.
           <div className="space-y-3 py-2">
             <div className="flex justify-between text-xs font-mono">
               <span className="text-[#929292]">Downloading...</span>
-              <span className="text-[#76B900]">{progress}%</span>
+              <span className="text-[#76B900]">{Math.min(progress, 100)}%</span>
             </div>
             <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#76B900] to-[#8CFF00] transition-all duration-200"
-                style={{ width: `${progress}%` }}
+                style={{ width: `${Math.min(progress, 100)}%` }}
               />
             </div>
           </div>
@@ -194,7 +215,7 @@ Copyright (C) 2026 NVIDIA Corporation. All rights reserved.
 
             <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
               <button
-                onClick={triggerActualFileDownload}
+                onClick={handleStartDownload}
                 className="w-full sm:flex-1 py-3 text-xs font-semibold uppercase tracking-wider text-black bg-[#76B900] hover:bg-[#8CFF00] rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(118,185,0,0.35)] hover:shadow-[0_0_30px_rgba(140,255,0,0.55)] cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

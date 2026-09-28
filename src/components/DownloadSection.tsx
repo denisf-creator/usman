@@ -26,8 +26,6 @@ export function DownloadSection({ onOpenDownload }: DownloadSectionProps) {
             </p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-[#929292]">
               <span>Windows 11 / 10 (64-bit)</span>
-              <span className="text-white/20">·</span>
-              <span>142 MB</span>
             </div>
           </div>
 

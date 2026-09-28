@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { HeroCanvas } from './HeroCanvas';
 
 interface HeroProps {
-  onOpenExplore: () => void;
+  onOpenExplore?: () => void;
   onOpenDownload: () => void;
 }
 
-export function Hero({ onOpenExplore, onOpenDownload }: HeroProps) {
+export function Hero({ onOpenDownload }: HeroProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadClick = () => {
@@ -60,12 +60,12 @@ export function Hero({ onOpenExplore, onOpenDownload }: HeroProps) {
           visual fidelity powered by NVIDIA AI.
         </p>
 
-        {/* CTAs (Compact Rounded Pill Glass-Style) */}
-        <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+        {/* CTAs (Centered Download Pill) */}
+        <div className="relative z-10 flex items-center justify-center w-full mx-auto">
           {/* Primary Pill Button with smooth fluid click animation */}
           <button
             onClick={handleDownloadClick}
-            className={`group relative overflow-hidden w-full sm:w-auto px-7 py-3 text-xs font-semibold tracking-wider uppercase text-black bg-[#76B900] hover:bg-[#8CFF00] rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(118,185,0,0.35)] hover:shadow-[0_0_35px_rgba(140,255,0,0.55)] cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 active:scale-95 ${
+            className={`group relative overflow-hidden px-8 py-3.5 text-xs font-semibold tracking-wider uppercase text-black bg-[#76B900] hover:bg-[#8CFF00] rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(118,185,0,0.35)] hover:shadow-[0_0_35px_rgba(140,255,0,0.55)] cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 active:scale-95 ${
               isDownloading ? 'scale-95 bg-[#8CFF00] shadow-[0_0_45px_rgba(140,255,0,0.7)]' : ''
             }`}
           >
@@ -90,25 +90,6 @@ export function Hero({ onOpenExplore, onOpenDownload }: HeroProps) {
             </svg>
             <span className="relative z-10 transition-transform duration-200">Download</span>
           </button>
-
-          {/* Secondary Pill Button - Smooth slide navigation to DLSS 5 */}
-          <a
-            href="#dlss5"
-            className="w-full sm:w-auto px-7 py-3 text-xs font-semibold tracking-wider uppercase text-[#F5F5F5] bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-white/25 rounded-full transition-all duration-300 text-center whitespace-nowrap cursor-pointer backdrop-blur-md active:scale-95 inline-flex items-center justify-center gap-1.5"
-          >
-            <span>Explore DLSS 5</span>
-            <svg className="w-3.5 h-3.5 text-[#76B900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-
-          {/* Minimalist Link */}
-          <a
-            href="#technology"
-            className="w-full sm:w-auto px-5 py-3 text-xs font-semibold tracking-wider uppercase text-[#929292] hover:text-white transition-all duration-300 text-center whitespace-nowrap"
-          >
-            Technology
-          </a>
         </div>
 
         {/* Unboxed Metadata Proof Row */}
